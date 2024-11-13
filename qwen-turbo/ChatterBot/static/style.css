@@ -1,0 +1,112 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f0f4f8;
+    color: #333;
+    line-height: 1.6;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    font-weight: 600;
+    color: #4CAF50;
+    margin-bottom: 20px;
+}
+
+.form-container {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.form-container:hover {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.form-container label {
+    font-weight: 500;
+    margin-bottom: 10px;
+    display: inline-block;
+    color: #555;
+}
+
+.form-container input {
+    width: 100%;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+}
+
+.form-container input:focus {
+    border-color: #4CAF50;
+    outline: none;
+}
+
+.form-container button {
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 15px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+.form-container button:hover {
+    background-color: #45a049;
+}
+
+.response-container {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #e8f5e9;
+    border-left: 5px solid #4CAF50;
+    font-size: 16px;
+    border-radius: 6px;
+    transition: background-color 0.3s ease;
+}
+
+.response-container h3 {
+    margin-top: 0;
+    font-weight: 500;
+    color: #333;
+}
+
+.response-container p {
+    margin: 0;
+    color: #555;
+    font-style: italic;
+}
+
+/* Adding a style for error messages */
+.error-message {
+    color: #d9534f;
+    background-color: #f8d7da;
+    padding: 15px;
+    border-radius: 6px;
+    margin-top: 20px;
+    border-left: 5px solid #d9534f;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+}
+
+.error-message h3 {
+    margin-top: 0;
+    color: #d9534f;
+}
+
+.error-message p {
+    margin: 0;
+    color: #721c24;
+}

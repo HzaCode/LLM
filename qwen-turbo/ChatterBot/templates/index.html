@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Q&A with Dashscope</title>
+</head>
+<body>
+    <h1>Ask a Question</h1>
+    <form id="askForm">
+        <label for="question">Question:</label>
+        <input type="text" id="question" name="question" placeholder="Ask your question here..." required>
+        <button type="submit">Submit</button>
+    </form>
+
+    <div id="responseContainer" style="display: none;">
+        <h3>Response:</h3>
+        <p id="responseText"></p>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+    // Handle form submission via JavaScript
+    $('#askForm').submit(function(event) {
+        event.preventDefault();  // Prevent the default form submission
+        
+        // Get the value from the question input field
+        var question = $('#question').val();
+
+        // Send an AJAX POST request to the /ask endpoint
+        $.ajax({
+            url: '/ask',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({ question: question }),
+            success: function(data) {
+                // Display the response text from the server
+                $('#responseText').text(data.response.text);
+                $('#responseContainer').show();
+            },
+            error: function() {
+                $('#responseText').text('An error occurred. Please try again.');
+                $('#responseContainer').show();
+            }
+        });
+    });
+    </script>
+</body>
+</html>
