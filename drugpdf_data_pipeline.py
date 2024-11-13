@@ -1,14 +1,13 @@
-
 import json
 import time
+import markdown
 from alibabacloud_docmind_api20220711.client import Client as docmind_api20220711Client
 from alibabacloud_tea_openapi import models as open_api_models
 from alibabacloud_docmind_api20220711 import models as docmind_api20220711_models
 from alibabacloud_tea_util import models as util_models
-
-# Configure Alibaba Cloud API credentials
 import os
 
+# Configure Alibaba Cloud API credentials
 ACCESS_KEY_ID = os.getenv('ACCESS_KEY_ID')
 ACCESS_KEY_SECRET = os.getenv('ACCESS_KEY_SECRET')
 
@@ -99,22 +98,49 @@ def json_to_html(json_file_path, html_file_path):
     """
     with open(json_file_path, 'r', encoding='utf-8') as f:
         data = json.load(f)
-    html_content = '<html><head><meta charset="utf-8"><title>Document</title></head><body>'
+    
+    
+    html_content = '<html><head><meta charset="utf-8"><title>Document</title><style>'
+    html_content += 'body { font-family: Arial, sans-serif; line-height: 1.6; margin: 20px; }'
+    html_content += 'h1, h2, h3, h4, h5, h6 { color: #333; margin-top: 20px; }'
+    html_content += 'p { margin: 10px 0; }'
+    html_content += 'table { width: 100%; border-collapse: collapse; margin: 20px 0; }'
+    html_content += 'th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }'
+    html_content += 'th { background-color: #f2f2f2; }'
+    html_content += '.text-block { margin-bottom: 20px; }'
+    html_content += '</style></head><body>'
+    
+
     for layout in data.get('layouts', []):
         layout_type = layout.get('type', 'text')
         text = layout.get('text', '').strip()
         level = layout.get('level', 0)
+        alignment = layout.get('alignment', 'left')
+        
+        
+        alignment_style = f'text-align: {alignment};'
+        
+       
+        html_text = markdown.markdown(text, extensions=['tables'])
+        
+      
         if layout_type == 'title':
             if level >= 1 and level <= 6:
-                html_content += f'<h{level}>{text}</h{level}>'
+                html_content += f'<h{level} style="{alignment_style}">{html_text}</h{level}>'
             else:
-                html_content += f'<h1>{text}</h1>'
+                html_content += f'<h1 style="{alignment_style}">{html_text}</h1>'
         else:
-            html_content += f'<p>{text}</p>'
+            
+            html_content += f'<div class="text-block" style="{alignment_style}">{html_text}</div>'
+    
+
     html_content += '</body></html>'
+    
+    
     with open(html_file_path, 'w', encoding='utf-8') as f:
         f.write(html_content)
-    print(f"HTML saved to {html_file_path}")
+    
+    print(f"HTML save to {html_file_path}")
 
 def extract_sections_from_json(json_file_path, sections_to_extract):
     """
@@ -127,6 +153,7 @@ def extract_sections_from_json(json_file_path, sections_to_extract):
     """
     with open(json_file_path, 'r', encoding='utf-8') as f:
         data = json.load(f)
+    
     extracted_content = {}
     current_section = None
     target_level = None
@@ -147,10 +174,12 @@ def extract_sections_from_json(json_file_path, sections_to_extract):
                     target_level = None
         elif current_section and layout_type == 'text':
             extracted_content[current_section].append(text)
+    
     for section, contents in extracted_content.items():
         print(f"\n{section}")
         for paragraph in contents:
             print(paragraph)
+    
     return extracted_content
 
 if __name__ == "__main__":
