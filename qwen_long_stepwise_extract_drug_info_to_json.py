@@ -45,8 +45,8 @@ for field, question in questions:
         model="qwen-long",
         messages=messages,
         stream=False,
-        temperature=0,
-        top_p=1
+        temperature=0, # Set to 0 to reduce randomness
+        top_p=1 # Ensure the output is deterministic
     )
 
     # Extract response content
