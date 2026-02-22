@@ -1,17 +1,16 @@
 import os
 from openai import OpenAI
 
-# Baidu ERNIE (AI Studio) - OpenAI-compatible endpoint
-# Docs: https://ai.baidu.com/ai-doc/AISTUDIO/rm344erns
-# Note: old OAuth + REST approach is deprecated; use OpenAI SDK now
-AI_STUDIO_API_KEY = os.getenv("AI_STUDIO_API_KEY", "YOUR_AI_STUDIO_KEY")
-ERNIE_BASE_URL = "https://aistudio.baidu.com/llm/lmapi/v3"
+# OpenRouter - unified gateway for multiple LLM providers
+# Docs: https://openrouter.ai/docs
+OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY", "YOUR_OPENROUTER_KEY")
+OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
 
-client = OpenAI(api_key=AI_STUDIO_API_KEY, base_url=ERNIE_BASE_URL)
-REQUEST_TIMEOUT = 180.0
+client = OpenAI(api_key=OPENROUTER_API_KEY, base_url=OPENROUTER_BASE_URL)
+REQUEST_TIMEOUT = 300.0
 
 
-# -- chat.completions API --
+# -- chat.completions API (text or vision) --
 def call_chat_api(model: str, prompt: str, image_b64: str = "", mime: str = "image/jpeg"):
     content = [{"type": "text", "text": prompt}]
     if image_b64:
